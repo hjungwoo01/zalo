@@ -61,5 +61,16 @@
         "schedule": {
             "Monday": "00:00"
         }
+    },
+    {
+        "id": 8,
+        "numbers": [
+            "7158339540589493255"
+        ],
+        "template": 1,
+        "auto_run": true,
+        "schedule": {
+            "Tuesday": "21:54"
+        }
     }
 ]

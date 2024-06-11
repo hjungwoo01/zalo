@@ -119,13 +119,13 @@ def cron_job():
             if d["auto_run"]:
                 schedule: dict = d["schedule"]
                 for key, value in schedule.items():
-                    current_time = datetime.now().strftime("%H:%M")
+                    current_time = datetime.now().strftime("%H:%M:%S")
                     current_day = datetime.now().strftime("%A")
+                    value += ":00"
                     if current_time == value:
-                        if key.lower() == "daily":
+                        if key.lower() == "daily" or key.title() == current_day:
                             start_function(d)
-                        elif key.title() == current_day:
-                            start_function(d)
+                            time.sleep(1)
     print("Cron job stopped...")
 
 
@@ -192,7 +192,6 @@ async def create_flow(data: FlowModel):
 
     templates = read_json_file(template_file)
 
-    print(type(data))
     if data.template not in {item["id"] for item in templates}:
         raise HTTPException(
             status_code=404,
