@@ -1,0 +1,65 @@
+[
+    {
+        "id": 2,
+        "numbers": [
+            "string"
+        ],
+        "template": 1,
+        "auto_run": true,
+        "schedule": {
+            "Daily": "12:00"
+        }
+    },
+    {
+        "id": 3,
+        "numbers": [
+            "string"
+        ],
+        "template": 1,
+        "auto_run": true,
+        "schedule": {
+            "Daily": "12:00"
+        }
+    },
+    {
+        "id": 4,
+        "numbers": [
+            "string"
+        ],
+        "template": 1,
+        "auto_run": true,
+        "schedule": {
+            "Monday": "02:50",
+            "Tuesday": "05:00"
+        }
+    },
+    {
+        "id": 5,
+        "numbers": [
+            "string"
+        ],
+        "template": 1,
+        "auto_run": false,
+        "schedule": {}
+    },
+    {
+        "numbers": [
+            "string"
+        ],
+        "template": 1,
+        "auto_run": false,
+        "schedule": {},
+        "id": 6
+    },
+    {
+        "id": 7,
+        "numbers": [
+            "string"
+        ],
+        "template": 1,
+        "auto_run": true,
+        "schedule": {
+            "Monday": "00:00"
+        }
+    }
+]
