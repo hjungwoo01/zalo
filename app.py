@@ -100,8 +100,7 @@ def start_function(d):
         None,
     )
     if result is not None:
-        t = threading.Thread(target=send_sms, args=(d["numbers"], result))
-        t.start()
+        send_sms(d["numbers"], result)
 
 
 stop_flag = False
@@ -161,9 +160,9 @@ async def add_template(data: TemplateModel):
 @app.get("/get-templates/")
 async def get_templates():
     file_name = "./templates.json"
-    tem = read_json_file(file_name)
+    data = read_json_file(file_name)
 
-    return tem
+    return data
 
 
 @app.delete("/delete-template/")
@@ -214,6 +213,24 @@ async def create_flow(data: FlowModel):
 @app.get("/get-flows/")
 async def get_flows():
     file_name = "./flows.json"
-    tem = read_json_file(file_name)
+    data = read_json_file(file_name)
 
-    return tem
+    return data
+
+
+@app.post("/run-flow/")
+async def run_flow(id: int):
+    file_name = "./flows.json"
+    data = read_json_file(file_name)
+
+    result = next((item for item in data if item["id"] == id), None)
+
+    if result:
+        start_function(result)
+        return responses.JSONResponse(
+            content={"msg": "Messages sent successfully!"}, status_code=200
+        )
+
+    return responses.JSONResponse(
+        content={"msg": "No flow found with given id!"}, status_code=404
+    )
