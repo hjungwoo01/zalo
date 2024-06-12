@@ -44,7 +44,7 @@
     },
     {
         "numbers": [
-            "string"
+            "7158339540589493255"
         ],
         "template": 1,
         "auto_run": false,
@@ -72,5 +72,14 @@
         "schedule": {
             "Tuesday": "21:54"
         }
+    },
+    {
+        "id": 9,
+        "numbers": [
+            "7158339540589493255"
+        ],
+        "template": 2,
+        "auto_run": false,
+        "schedule": {}
     }
 ]
