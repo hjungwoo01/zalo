@@ -11,7 +11,7 @@ class FlowModel(BaseModel):
     numbers: List[str]
     template: int
     auto_run: bool
-    schedule: dict | None
+    schedule: dict
 
 
 class TemplateModel(BaseModel):
