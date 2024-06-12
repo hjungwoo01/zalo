@@ -70,8 +70,6 @@ def get_access_token():
         tokens["created_time"] = time.time()
 
         write_json_file(token_file, tokens)
-    else:
-        print("access token still valid!")
     return access_token
 
 
@@ -86,9 +84,12 @@ def send_sms(numbers, body):
             "message": {"text": body},
         }
 
-        response = requests.post(url, json=data, headers=headers)
+        response = requests.post(url, json=data, headers=headers).json()
 
-        print(response.json())
+        if "Your app needs to connect with Zalo Cloud Account" in response['message']:
+            return "Account out of credit"
+        else:
+            return "Messages sent successfully!"
 
 
 def start_function(d):
@@ -100,7 +101,7 @@ def start_function(d):
         None,
     )
     if result is not None:
-        send_sms(d["numbers"], result)
+        return send_sms(d["numbers"], result)
 
 
 stop_flag = False
@@ -175,9 +176,7 @@ async def delete_template(id: int):
     if result:
         data.remove(result)
         write_json_file(file_name, data)
-        return responses.JSONResponse(
-            content={"msg": "Template deleted successfully!"}, status_code=204
-        )
+        return responses.JSONResponse(status_code=204)
 
     return responses.JSONResponse(
         content={"msg": "No template found with given id!"}, status_code=404
@@ -226,11 +225,26 @@ async def run_flow(id: int):
     result = next((item for item in data if item["id"] == id), None)
 
     if result:
-        start_function(result)
-        return responses.JSONResponse(
-            content={"msg": "Messages sent successfully!"}, status_code=200
-        )
+        res = start_function(result)
+        return responses.JSONResponse(content={"msg": res}, status_code=200)
 
     return responses.JSONResponse(
         content={"msg": "No flow found with given id!"}, status_code=404
+    )
+
+
+@app.delete("/delete-flow/")
+async def delete_flow(id: int):
+    file_name = "./flows.json"
+
+    data = read_json_file(file_name)
+    result = next((item for item in data if item["id"] == id), None)
+
+    if result:
+        data.remove(result)
+        write_json_file(file_name, data)
+        return responses.JSONResponse(status_code=204)
+
+    return responses.JSONResponse(
+        content={"msg": "No Flow found with given id!"}, status_code=404
     )
