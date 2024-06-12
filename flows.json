@@ -68,7 +68,7 @@
             "7158339540589493255"
         ],
         "template": 1,
-        "auto_run": true,
+        "auto_run": false,
         "schedule": {
             "Tuesday": "21:54"
         }
