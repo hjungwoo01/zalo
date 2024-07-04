@@ -73,23 +73,39 @@ def get_access_token():
     return access_token
 
 
+def get_user_id(number):
+    access_token = get_access_token()
+
+    headers = {"Content-Type": "application/json", "access_token": access_token}
+    response = requests.get(
+        "https://openapi.zalo.me/v3.0/oa/user/detail",
+        params={"data": json.dumps({"phone": number})},
+        headers=headers,
+    )
+    user_data = response.json()
+    user_id = user_data.get("data", {}).get("user_id")
+    return user_id
+
+
 def send_sms(numbers, body):
     access_token = get_access_token()
 
     url = "https://openapi.zalo.me/v3.0/oa/message/cs"
     headers = {"Content-Type": "application/json", "access_token": access_token}
     for number in numbers:
-        data = {
-            "recipient": {"user_id": number},
-            "message": {"text": body},
-        }
+        user_id = get_user_id(number)
+        if user_id:
+            data = {
+                "recipient": {"user_id": user_id},
+                "message": {"text": body},
+            }
 
-        response = requests.post(url, json=data, headers=headers).json()
-
-        if "Your app needs to connect with Zalo Cloud Account" in response['message']:
-            return "Account out of credit"
-        else:
-            return "Messages sent successfully!"
+            response = requests.post(url, json=data, headers=headers).json()
+        
+            if "Your app needs to connect with Zalo Cloud Account" in response["message"]:
+                return "Account out of credit."
+    
+    return "Messages sent successfully!"
 
 
 def start_function(d):

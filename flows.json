@@ -81,5 +81,14 @@
         "template": 2,
         "auto_run": false,
         "schedule": {}
+    },
+    {
+        "id": 10,
+        "numbers": [
+            "+923042516466"
+        ],
+        "template": 2,
+        "auto_run": false,
+        "schedule": {}
     }
 ]
