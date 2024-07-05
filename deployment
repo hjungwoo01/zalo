@@ -1,0 +1,6 @@
+docker stop zalo_container
+docker rm zalo_container
+docker rmi zalo_image
+git pull origin main
+docker build -t zalo_image .
+docker run -d --name zalo_container -p 8002:8002 zalo_image

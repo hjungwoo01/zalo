@@ -90,5 +90,33 @@
         "template": 2,
         "auto_run": false,
         "schedule": {}
+    },
+    {
+        "id": 11,
+        "numbers": [
+            "+923343284408"
+        ],
+        "template": 2,
+        "auto_run": true,
+        "schedule": {}
+    },
+    {
+        "id": 12,
+        "numbers": [
+            "+16465996079"
+        ],
+        "template": 3,
+        "auto_run": false,
+        "schedule": {}
+    },
+    {
+        "id": 13,
+        "numbers": [
+            "+16465996079",
+            "+84356247946"
+        ],
+        "template": 3,
+        "auto_run": false,
+        "schedule": {}
     }
 ]
