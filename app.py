@@ -65,7 +65,7 @@ def get_access_token():
         }
 
         tokens = requests.post(url, data=data, headers=headers).json()
-
+        print(tokens)
         access_token = tokens["access_token"]
         tokens["created_time"] = time.time()
 
