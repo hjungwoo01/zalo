@@ -227,10 +227,22 @@ async def create_flow(data: FlowModel):
 
 @app.get("/get-flows/")
 async def get_flows():
-    file_name = "./flows.json"
-    data = read_json_file(file_name)
+    flow_file = "./flows.json"
+    template_file = "./templates.json"
 
-    return data
+    flows = read_json_file(flow_file)
+    templates = read_json_file(template_file)
+
+    template_map = {template["id"]: template for template in templates}
+
+    updated_flows = []
+    for flow in flows:
+        template_id = flow["template"]
+        if template_id in template_map:
+            flow["template"] = template_map[template_id]
+        updated_flows.append(flow)
+
+    return updated_flows
 
 
 @app.post("/run-flow/")
@@ -264,3 +276,4 @@ async def delete_flow(id: int):
     return responses.JSONResponse(
         content={"msg": "No Flow found with given id!"}, status_code=404
     )
+    
